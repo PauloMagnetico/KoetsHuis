@@ -1,33 +1,37 @@
+name: koetshuis
+
 services:
   web:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "5173:5173"
+      - "5174:5173"
     environment:
       - VITE_PROXY_TARGET=http://server:3000
     volumes:
-      - /usr/src/app/node_modules
+      - koetshuis_web_modules:/usr/src/app/node_modules
       - .:/usr/src/app
   server:
     build:
       context: ./server
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       - DB_URL=mongodb://mongodb:27017/koetshuis
     depends_on:
       - mongodb
     volumes:
-      - /usr/src/app/node_modules
+      - koetshuis_server_modules:/usr/src/app/node_modules
       - ./server:/usr/src/app
   mongodb:
     image: mongo:latest
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
-      - mongodb_data:/data/db
+      - koetshuis_mongodb:/data/db
 volumes:
-  mongodb_data:
+  koetshuis_web_modules:
+  koetshuis_server_modules:
+  koetshuis_mongodb:
