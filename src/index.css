@@ -89,6 +89,25 @@ body {
 .badge.laurens { background: #dbeafe; color: #1d4ed8; }
 .badge.julia { background: #fce7f3; color: #be185d; }
 
+/* Category badge */
+.badge.category { background: #f0f0eb; color: #555; }
+
+/* Dashboard charts */
+.charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; }
+.chart-card { background: white; border-radius: 10px; padding: 1.25rem 1rem 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+.chart-card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: #444; }
+.chart-tooltip { background: white; border: 1px solid #eee; border-radius: 6px; padding: 0.6rem 0.9rem; font-size: 0.875rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+/* Table extras */
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.laurens-text { color: #2563eb; }
+.julia-text { color: #db2777; }
+
+/* Progress bar */
+.progress-bar { height: 6px; background: #f0f0f0; border-radius: 99px; width: 120px; display: inline-block; vertical-align: middle; margin-right: 0.5rem; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 99px; }
+.progress-pct { font-size: 0.8rem; color: #888; }
+
 /* Delete button */
 .delete-btn { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1rem; padding: 0.2rem 0.5rem; border-radius: 4px; }
 .delete-btn:hover { color: #e53e3e; background: #fff5f5; }

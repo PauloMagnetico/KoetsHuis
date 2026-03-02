@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getExpenses, createExpense, deleteExpense } from '../api/expenses';
-import { Expense, User } from '../types';
+import { Expense, User, Category, CATEGORIES } from '../types';
 
 export default function ExpensesPage() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -8,6 +8,7 @@ export default function ExpensesPage() {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [paidBy, setPaidBy] = useState<User>('Laurens');
+  const [category, setCategory] = useState<Category>('Materials');
   const [submitting, setSubmitting] = useState(false);
 
   const load = () => getExpenses().then(data => { setExpenses(data); setLoading(false); });
@@ -18,7 +19,7 @@ export default function ExpensesPage() {
     e.preventDefault();
     if (!description || !price) return;
     setSubmitting(true);
-    await createExpense({ description, price: parseFloat(price), paidBy });
+    await createExpense({ description, price: parseFloat(price), paidBy, category });
     setDescription('');
     setPrice('');
     await load();
@@ -51,6 +52,9 @@ export default function ExpensesPage() {
           step="0.01"
           required
         />
+        <select value={category} onChange={e => setCategory(e.target.value as Category)}>
+          {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+        </select>
         <select value={paidBy} onChange={e => setPaidBy(e.target.value as User)}>
           <option value="Laurens">Laurens</option>
           <option value="Julia">Julia</option>
@@ -65,6 +69,7 @@ export default function ExpensesPage() {
           <thead>
             <tr>
               <th>Description</th>
+              <th>Category</th>
               <th>Price</th>
               <th>Paid by</th>
               <th>Date</th>
@@ -75,6 +80,7 @@ export default function ExpensesPage() {
             {expenses.map(expense => (
               <tr key={expense._id}>
                 <td>{expense.description}</td>
+                <td><span className="badge category">{expense.category ?? 'Other'}</span></td>
                 <td>€{expense.price.toFixed(2)}</td>
                 <td>
                   <span className={`badge ${expense.paidBy.toLowerCase()}`}>
@@ -88,7 +94,7 @@ export default function ExpensesPage() {
               </tr>
             ))}
             {expenses.length === 0 && (
-              <tr><td colSpan={5} style={{ textAlign: 'center', color: '#888' }}>No expenses yet</td></tr>
+              <tr><td colSpan={6} style={{ textAlign: 'center', color: '#888' }}>No expenses yet</td></tr>
             )}
           </tbody>
         </table>
