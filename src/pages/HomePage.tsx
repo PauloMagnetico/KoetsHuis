@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getExpenses } from '../api/expenses';
-import { Expense } from '../types';
+import type { Expense } from '../types';
 
 export default function HomePage() {
   const [expenses, setExpenses] = useState<Expense[]>([]);

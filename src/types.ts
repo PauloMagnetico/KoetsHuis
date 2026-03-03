@@ -1,24 +1,22 @@
 export type User = 'Laurens' | 'Julia';
 
-export const CATEGORIES = [
-  'Materials',
-  'Labor',
-  'Kitchen',
-  'Bathroom',
-  'Electrical',
-  'Plumbing',
-  'Flooring',
-  'Garden',
-  'Other',
-] as const;
+export type TaskStatus = 'todo' | 'in-progress' | 'done';
 
-export type Category = typeof CATEGORIES[number];
+export interface Task {
+  _id: string;
+  title: string;
+  category: string;
+  status: TaskStatus;
+  description: string;
+  assignedTo: User | null;
+  createdAt: string;
+}
 
 export interface Expense {
   _id: string;
   description: string;
   price: number;
   paidBy: User;
-  category: Category;
+  category: string;
   createdAt: string;
 }

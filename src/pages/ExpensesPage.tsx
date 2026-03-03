@@ -1,19 +1,26 @@
 import { useEffect, useState } from 'react';
-import { getExpenses, createExpense, deleteExpense } from '../api/expenses';
-import { Expense, User, Category, CATEGORIES } from '../types';
+import { getExpenses, createExpense, deleteExpense, getCategories } from '../api/expenses';
+import { type Expense, type User } from '../types';
 
 export default function ExpensesPage() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [paidBy, setPaidBy] = useState<User>('Laurens');
-  const [category, setCategory] = useState<Category>('Materials');
+  const [category, setCategory] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   const load = () => getExpenses().then(data => { setExpenses(data); setLoading(false); });
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    getCategories().then(cats => {
+      setCategories(cats);
+      if (cats.length > 0) setCategory(cats[0]);
+    });
+    load();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,8 +59,8 @@ export default function ExpensesPage() {
           step="0.01"
           required
         />
-        <select value={category} onChange={e => setCategory(e.target.value as Category)}>
-          {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+        <select value={category} onChange={e => setCategory(e.target.value)}>
+          {categories.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
         <select value={paidBy} onChange={e => setPaidBy(e.target.value as User)}>
           <option value="Laurens">Laurens</option>

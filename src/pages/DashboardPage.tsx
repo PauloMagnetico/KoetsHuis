@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getExpenses } from '../api/expenses';
-import { Expense, CATEGORIES } from '../types';
+import { type Expense } from '../types';
 import {
   PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer,
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
@@ -21,7 +21,8 @@ export default function DashboardPage() {
     getExpenses().then(data => { setExpenses(data); setLoading(false); });
   }, []);
 
-  const byCategory = CATEGORIES.map((cat, i) => {
+  const uniqueCategories = [...new Set(expenses.map(e => e.category ?? 'Other'))];
+  const byCategory = uniqueCategories.map((cat, i) => {
     const items = expenses.filter(e => (e.category ?? 'Other') === cat);
     const total = items.reduce((s, e) => s + e.price, 0);
     const laurens = items.filter(e => e.paidBy === 'Laurens').reduce((s, e) => s + e.price, 0);

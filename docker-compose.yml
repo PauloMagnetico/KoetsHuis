@@ -19,19 +19,12 @@ services:
     ports:
       - "3001:3000"
     environment:
-      - DB_URL=mongodb://mongodb:27017/koetshuis
-    depends_on:
-      - mongodb
+      - DB_PATH=/data/expenses.db
+      - CHOKIDAR_USEPOLLING=1
     volumes:
-      - koetshuis_server_modules:/usr/src/app/node_modules
       - ./server:/usr/src/app
-  mongodb:
-    image: mongo:latest
-    ports:
-      - "27018:27017"
-    volumes:
-      - koetshuis_mongodb:/data/db
+      - koetshuis_data:/data
+
 volumes:
   koetshuis_web_modules:
-  koetshuis_server_modules:
-  koetshuis_mongodb:
+  koetshuis_data:
