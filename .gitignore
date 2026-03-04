@@ -25,6 +25,10 @@ dist-ssr
 
 server/.env
 
+# Database
+data/
+*.db
+
 # Gas Town (added by gt)
 .runtime/
 .claude/commands/
