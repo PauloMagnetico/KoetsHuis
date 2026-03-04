@@ -25,6 +25,23 @@ db.exec(`
 `);
 
 db.exec(`
+  CREATE TABLE IF NOT EXISTS estimates (
+    _id         TEXT PRIMARY KEY,
+    description TEXT NOT NULL,
+    price       REAL NOT NULL,
+    category    TEXT NOT NULL DEFAULT 'Other',
+    createdAt   TEXT NOT NULL
+  );
+  CREATE TABLE IF NOT EXISTS invoices (
+    _id         TEXT PRIMARY KEY,
+    description TEXT NOT NULL,
+    price       REAL NOT NULL,
+    category    TEXT NOT NULL DEFAULT 'Other',
+    createdAt   TEXT NOT NULL
+  );
+`);
+
+db.exec(`
   CREATE TABLE IF NOT EXISTS tasks (
     _id         TEXT PRIMARY KEY,
     title       TEXT NOT NULL,
@@ -98,6 +115,42 @@ app.post('/api/expenses', (req, res) => {
 
 app.delete('/api/expenses/:id', (req, res) => {
   db.prepare('DELETE FROM expenses WHERE _id = ?').run(req.params.id);
+  res.status(204).send();
+});
+
+app.get('/api/estimates', (_req, res) => {
+  res.json(db.prepare('SELECT * FROM estimates ORDER BY createdAt DESC').all());
+});
+
+app.post('/api/estimates', (req, res) => {
+  const { description, price, category } = req.body;
+  const _id = crypto.randomUUID();
+  const createdAt = new Date().toISOString();
+  db.prepare('INSERT INTO estimates (_id, description, price, category, createdAt) VALUES (?, ?, ?, ?, ?)')
+    .run(_id, description, price, category ?? 'Other', createdAt);
+  res.status(201).json({ _id, description, price, category: category ?? 'Other', createdAt });
+});
+
+app.delete('/api/estimates/:id', (req, res) => {
+  db.prepare('DELETE FROM estimates WHERE _id = ?').run(req.params.id);
+  res.status(204).send();
+});
+
+app.get('/api/invoices', (_req, res) => {
+  res.json(db.prepare('SELECT * FROM invoices ORDER BY createdAt DESC').all());
+});
+
+app.post('/api/invoices', (req, res) => {
+  const { description, price, category } = req.body;
+  const _id = crypto.randomUUID();
+  const createdAt = new Date().toISOString();
+  db.prepare('INSERT INTO invoices (_id, description, price, category, createdAt) VALUES (?, ?, ?, ?, ?)')
+    .run(_id, description, price, category ?? 'Other', createdAt);
+  res.status(201).json({ _id, description, price, category: category ?? 'Other', createdAt });
+});
+
+app.delete('/api/invoices/:id', (req, res) => {
+  db.prepare('DELETE FROM invoices WHERE _id = ?').run(req.params.id);
   res.status(204).send();
 });
 
