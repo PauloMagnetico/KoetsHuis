@@ -1,4 +1,4 @@
-import type { Expense, Task, TaskStatus } from '../types';
+import type { Expense, Estimate, Invoice, Task, TaskStatus } from '../types';
 
 const DEFAULT_CATEGORIES = ['Materiaal', 'Gereedschap', 'Afwerking', 'Isolatie', 'Elektra', 'Sanitair'];
 
@@ -47,6 +47,44 @@ export function demoCreateExpense(data: Omit<Expense, '_id' | 'createdAt'>): Pro
 export function demoDeleteExpense(id: string): Promise<void> {
   const expenses = load<Expense[]>('demo_expenses', []);
   save('demo_expenses', expenses.filter(e => e._id !== id));
+  return Promise.resolve();
+}
+
+// Estimates
+
+export function demoGetEstimates(): Promise<Estimate[]> {
+  return Promise.resolve(load<Estimate[]>('demo_estimates', []));
+}
+
+export function demoCreateEstimate(data: Omit<Estimate, '_id' | 'createdAt'>): Promise<Estimate> {
+  const items = load<Estimate[]>('demo_estimates', []);
+  const item: Estimate = { ...data, _id: crypto.randomUUID(), createdAt: new Date().toISOString() };
+  save('demo_estimates', [...items, item]);
+  return Promise.resolve(item);
+}
+
+export function demoDeleteEstimate(id: string): Promise<void> {
+  const items = load<Estimate[]>('demo_estimates', []);
+  save('demo_estimates', items.filter(e => e._id !== id));
+  return Promise.resolve();
+}
+
+// Invoices
+
+export function demoGetInvoices(): Promise<Invoice[]> {
+  return Promise.resolve(load<Invoice[]>('demo_invoices', []));
+}
+
+export function demoCreateInvoice(data: Omit<Invoice, '_id' | 'createdAt'>): Promise<Invoice> {
+  const items = load<Invoice[]>('demo_invoices', []);
+  const item: Invoice = { ...data, _id: crypto.randomUUID(), createdAt: new Date().toISOString() };
+  save('demo_invoices', [...items, item]);
+  return Promise.resolve(item);
+}
+
+export function demoDeleteInvoice(id: string): Promise<void> {
+  const items = load<Invoice[]>('demo_invoices', []);
+  save('demo_invoices', items.filter(e => e._id !== id));
   return Promise.resolve();
 }
 

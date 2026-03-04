@@ -20,3 +20,19 @@ export interface Expense {
   category: string;
   createdAt: string;
 }
+
+export interface Estimate {
+  _id: string;
+  description: string;
+  price: number;
+  category: string;
+  createdAt: string;
+}
+
+export interface Invoice {
+  _id: string;
+  description: string;
+  price: number;
+  category: string;
+  createdAt: string;
+}
