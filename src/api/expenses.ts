@@ -1,36 +1,42 @@
 import type { Expense } from '../types';
+import { demoGetCategories, demoCreateCategory, demoDeleteCategory, demoGetExpenses, demoCreateExpense, demoDeleteExpense } from './demo';
 
-export async function getCategories(): Promise<string[]> {
-  const res = await fetch('/api/categories');
-  return res.json();
+const DEMO = import.meta.env.VITE_DEMO_MODE === 'true';
+
+export function getCategories(): Promise<string[]> {
+  if (DEMO) return demoGetCategories();
+  return fetch('/api/categories').then(r => r.json());
 }
 
-export async function createCategory(name: string): Promise<void> {
-  await fetch('/api/categories', {
+export function createCategory(name: string): Promise<void> {
+  if (DEMO) return demoCreateCategory(name);
+  return fetch('/api/categories', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name }),
-  });
+  }).then();
 }
 
-export async function deleteCategory(name: string): Promise<void> {
-  await fetch(`/api/categories/${encodeURIComponent(name)}`, { method: 'DELETE' });
+export function deleteCategory(name: string): Promise<void> {
+  if (DEMO) return demoDeleteCategory(name);
+  return fetch(`/api/categories/${encodeURIComponent(name)}`, { method: 'DELETE' }).then();
 }
 
-export async function getExpenses(): Promise<Expense[]> {
-  const res = await fetch('/api/expenses');
-  return res.json();
+export function getExpenses(): Promise<Expense[]> {
+  if (DEMO) return demoGetExpenses();
+  return fetch('/api/expenses').then(r => r.json());
 }
 
-export async function createExpense(data: Omit<Expense, '_id' | 'createdAt'>): Promise<Expense> {
-  const res = await fetch('/api/expenses', {
+export function createExpense(data: Omit<Expense, '_id' | 'createdAt'>): Promise<Expense> {
+  if (DEMO) return demoCreateExpense(data);
+  return fetch('/api/expenses', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
-  });
-  return res.json();
+  }).then(r => r.json());
 }
 
-export async function deleteExpense(id: string): Promise<void> {
-  await fetch(`/api/expenses/${id}`, { method: 'DELETE' });
+export function deleteExpense(id: string): Promise<void> {
+  if (DEMO) return demoDeleteExpense(id);
+  return fetch(`/api/expenses/${id}`, { method: 'DELETE' }).then();
 }
