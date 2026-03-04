@@ -84,42 +84,42 @@ export default function HomePage() {
   return (
     <div className="page">
       <h1>KoetsHuis Renovatie</h1>
-      <p className="subtitle">Overview of the renovation project</p>
+      <p className="subtitle">Overzicht van het renovatieproject</p>
 
       {loading ? <p>Loading...</p> : (
         <>
           <div className="stats-grid">
             <div className="stat-card">
-              <span className="stat-label">Estimated</span>
+              <span className="stat-label">Geraamd</span>
               <span className="stat-value">{fmt(estimateTotal)}</span>
             </div>
             <div className="stat-card">
-              <span className="stat-label">Quoted</span>
+              <span className="stat-label">Geoffreerd</span>
               <span className="stat-value">{fmt(invoiceTotal)}</span>
             </div>
             <div className="stat-card">
-              <span className="stat-label">Total Spent</span>
+              <span className="stat-label">Totaal Uitgegeven</span>
               <span className="stat-value">{fmt(total)}</span>
             </div>
             <div className="stat-card">
-              <span className="stat-label">Balance</span>
+              <span className="stat-label">Balans</span>
               <span className={`stat-value ${balance > 0 ? 'laurens' : balance < 0 ? 'julia' : ''}`}>
                 {balance === 0
                   ? 'Even'
                   : balance > 0
-                    ? `Julia owes ${fmt(Math.abs(balance) / 2)}`
-                    : `Laurens owes ${fmt(Math.abs(balance) / 2)}`}
+                    ? `Julia is schuldig ${fmt(Math.abs(balance) / 2)}`
+                    : `Laurens is schuldig ${fmt(Math.abs(balance) / 2)}`}
               </span>
             </div>
           </div>
 
           {!hasAnyData ? (
-            <p style={{ color: '#888', marginTop: '2rem' }}>No data yet — add estimates, invoices or expenses to see charts.</p>
+            <p style={{ color: '#888', marginTop: '2rem' }}>Nog geen data — voeg ramingen, offertes of uitgaven toe om grafieken te zien.</p>
           ) : (
             <>
               {comparisonData.length > 0 && (
                 <div className="chart-card" style={{ marginBottom: '1.5rem' }}>
-                  <h2>Estimate vs Invoice vs Actual per Category</h2>
+                  <h2>Raming vs Offerte vs Werkelijk per Categorie</h2>
                   <ResponsiveContainer width="100%" height={320}>
                     <BarChart data={comparisonData} margin={{ top: 5, right: 10, left: 10, bottom: 50 }}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -127,9 +127,9 @@ export default function HomePage() {
                       <YAxis tickFormatter={(v) => `€${v}`} tick={{ fontSize: 12 }} />
                       <Tooltip content={<CustomTooltip />} />
                       <Legend verticalAlign="top" />
-                      <Bar dataKey="estimate" name="Estimate" fill="#a8dadc" radius={[3, 3, 0, 0]} />
-                      <Bar dataKey="invoice" name="Invoice" fill="#e8863a" radius={[3, 3, 0, 0]} />
-                      <Bar dataKey="actual" name="Actual" fill="#2563eb" radius={[3, 3, 0, 0]} />
+                      <Bar dataKey="estimate" name="Raming" fill="#a8dadc" radius={[3, 3, 0, 0]} />
+                      <Bar dataKey="invoice" name="Offerte" fill="#e8863a" radius={[3, 3, 0, 0]} />
+                      <Bar dataKey="actual" name="Werkelijk" fill="#2563eb" radius={[3, 3, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -139,7 +139,7 @@ export default function HomePage() {
                 <>
                   <div className="charts-grid">
                     <div className="chart-card">
-                      <h2>Expenses by Category</h2>
+                      <h2>Uitgaven per Categorie</h2>
                       <ResponsiveContainer width="100%" height={280}>
                         <PieChart>
                           <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`} labelLine={false}>
@@ -151,7 +151,7 @@ export default function HomePage() {
                     </div>
 
                     <div className="chart-card">
-                      <h2>Laurens vs Julia per Category</h2>
+                      <h2>Laurens vs Julia per Categorie</h2>
                       <ResponsiveContainer width="100%" height={280}>
                         <BarChart data={byCategory} margin={{ top: 5, right: 10, left: 10, bottom: 40 }}>
                           <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -166,15 +166,15 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  <h2 style={{ margin: '2rem 0 1rem' }}>Category Breakdown</h2>
+                  <h2 style={{ margin: '2rem 0 1rem' }}>Categorieoverzicht</h2>
                   <table className="expense-table">
                     <thead>
                       <tr>
-                        <th>Category</th>
+                        <th>Categorie</th>
                         <th>Laurens</th>
                         <th>Julia</th>
-                        <th>Actual</th>
-                        <th>Share</th>
+                        <th>Werkelijk</th>
+                        <th>Aandeel</th>
                       </tr>
                     </thead>
                     <tbody>

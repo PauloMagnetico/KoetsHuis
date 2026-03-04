@@ -40,19 +40,19 @@ export default function ExpensesPage() {
 
   return (
     <div className="page">
-      <h1>Expenses</h1>
+      <h1>Uitgaven</h1>
 
       <form className="expense-form" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Description"
+          placeholder="Omschrijving"
           value={description}
           onChange={e => setDescription(e.target.value)}
           required
         />
         <input
           type="number"
-          placeholder="Price (€)"
+          placeholder="Prijs (€)"
           value={price}
           onChange={e => setPrice(e.target.value)}
           min="0"
@@ -67,7 +67,7 @@ export default function ExpensesPage() {
           <option value="Julia">Julia</option>
         </select>
         <button type="submit" disabled={submitting}>
-          {submitting ? 'Adding...' : 'Add Expense'}
+          {submitting ? 'Toevoegen...' : 'Uitgave toevoegen'}
         </button>
       </form>
 
@@ -75,11 +75,11 @@ export default function ExpensesPage() {
         <table className="expense-table">
           <thead>
             <tr>
-              <th>Description</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Paid by</th>
-              <th>Date</th>
+              <th>Omschrijving</th>
+              <th>Categorie</th>
+              <th>Prijs</th>
+              <th>Betaald door</th>
+              <th>Datum</th>
               <th></th>
             </tr>
           </thead>
@@ -101,7 +101,7 @@ export default function ExpensesPage() {
               </tr>
             ))}
             {expenses.length === 0 && (
-              <tr><td colSpan={6} style={{ textAlign: 'center', color: '#888' }}>No expenses yet</td></tr>
+              <tr><td colSpan={6} style={{ textAlign: 'center', color: '#888' }}>Nog geen uitgaven</td></tr>
             )}
           </tbody>
         </table>

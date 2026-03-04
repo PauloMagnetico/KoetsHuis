@@ -42,20 +42,20 @@ export default function InvoicesPage() {
 
   return (
     <div className="page">
-      <h1>Invoices</h1>
-      <p className="subtitle">Contractor quotes before the job</p>
+      <h1>Offertes</h1>
+      <p className="subtitle">Aannemersoffertes voor de werken</p>
 
       <form className="expense-form" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Description"
+          placeholder="Omschrijving"
           value={description}
           onChange={e => setDescription(e.target.value)}
           required
         />
         <input
           type="number"
-          placeholder="Price (€)"
+          placeholder="Prijs (€)"
           value={price}
           onChange={e => setPrice(e.target.value)}
           min="0"
@@ -66,7 +66,7 @@ export default function InvoicesPage() {
           {categories.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
         <button type="submit" disabled={submitting}>
-          {submitting ? 'Adding...' : 'Add Invoice'}
+          {submitting ? 'Toevoegen...' : 'Offerte toevoegen'}
         </button>
       </form>
 
@@ -75,10 +75,10 @@ export default function InvoicesPage() {
           <table className="expense-table">
             <thead>
               <tr>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Date</th>
+                <th>Omschrijving</th>
+                <th>Categorie</th>
+                <th>Prijs</th>
+                <th>Datum</th>
                 <th></th>
               </tr>
             </thead>
@@ -95,13 +95,13 @@ export default function InvoicesPage() {
                 </tr>
               ))}
               {invoices.length === 0 && (
-                <tr><td colSpan={5} style={{ textAlign: 'center', color: '#888' }}>No invoices yet</td></tr>
+                <tr><td colSpan={5} style={{ textAlign: 'center', color: '#888' }}>Nog geen offertes</td></tr>
               )}
             </tbody>
             {invoices.length > 0 && (
               <tfoot>
                 <tr>
-                  <td colSpan={2}><strong>Total</strong></td>
+                  <td colSpan={2}><strong>Totaal</strong></td>
                   <td className="num"><strong>€{total.toFixed(2)}</strong></td>
                   <td colSpan={2} />
                 </tr>

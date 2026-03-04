@@ -74,33 +74,33 @@ function TaskModal({
     <div className="modal-backdrop" ref={backdropRef} onClick={e => { if (e.target === backdropRef.current) onClose(); }}>
       <div className="modal">
         <div className="modal__header">
-          <h2>{isEdit ? 'Edit task' : 'New task'}</h2>
+          <h2>{isEdit ? 'Taak bewerken' : 'Nieuwe taak'}</h2>
           <button className="icon-btn" onClick={onClose}>✕</button>
         </div>
         <form onSubmit={handleSubmit} className="modal__body">
           <label>
-            Title
+            Titel
             <input value={title} onChange={e => setTitle(e.target.value)} required autoFocus />
           </label>
           <label>
-            Description
-            <textarea value={description} onChange={e => setDescription(e.target.value)} rows={3} placeholder="Optional details…" />
+            Omschrijving
+            <textarea value={description} onChange={e => setDescription(e.target.value)} rows={3} placeholder="Optionele details…" />
           </label>
           <label>
-            Category
+            Categorie
             <select value={category} onChange={e => setCategory(e.target.value)}>
               {categories.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
           </label>
           <div className="modal__field">
-            <span className="modal__label">Assigned to</span>
+            <span className="modal__label">Toegewezen aan</span>
             <div className="modal__assignees">
               <button
                 type="button"
                 className={`assignee-btn${assignedTo === null ? ' assignee-btn--active' : ''}`}
                 onClick={() => setAssignedTo(null)}
               >
-                None
+                Niemand
               </button>
               {USERS.map(u => (
                 <button
@@ -116,8 +116,8 @@ function TaskModal({
             </div>
           </div>
           <div className="modal__footer">
-            <button type="button" className="btn-secondary" onClick={onClose}>Cancel</button>
-            <button type="submit" disabled={saving}>{saving ? 'Saving…' : isEdit ? 'Save' : 'Create'}</button>
+            <button type="button" className="btn-secondary" onClick={onClose}>Annuleren</button>
+            <button type="submit" disabled={saving}>{saving ? 'Opslaan…' : isEdit ? 'Opslaan' : 'Aanmaken'}</button>
           </div>
         </form>
       </div>
@@ -188,9 +188,9 @@ function TaskCard({
 // ── Column (droppable) ───────────────────────────────────────────────────────
 
 const COLUMN_LABELS: Record<TaskStatus, string> = {
-  'todo': 'To Do',
-  'in-progress': 'In Progress',
-  'done': 'Done',
+  'todo': 'Te doen',
+  'in-progress': 'Bezig',
+  'done': 'Gedaan',
 };
 
 function Column({
@@ -272,9 +272,9 @@ export default function TaskBoardPage() {
   return (
     <div className="board-page">
       <div className="board-page__header">
-        <h1>Task Board</h1>
+        <h1>Takenbord</h1>
         <button className="btn-primary" onClick={() => setModalTask(null)}>
-          <MdAdd size={18} /> New task
+          <MdAdd size={18} /> Nieuwe taak
         </button>
       </div>
 

@@ -16,7 +16,7 @@ export default function SettingsPage() {
     const trimmed = newName.trim();
     if (!trimmed) return;
     if (categories.includes(trimmed)) {
-      setError('Category already exists');
+      setError('Categorie bestaat al');
       return;
     }
     setSubmitting(true);
@@ -34,21 +34,21 @@ export default function SettingsPage() {
 
   return (
     <div className="page">
-      <h1>Settings</h1>
+      <h1>Instellingen</h1>
 
       <section>
-        <h2 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ccc' }}>Categories</h2>
+        <h2 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ccc' }}>Categorieën</h2>
 
         <form className="expense-form" onSubmit={handleAdd} style={{ maxWidth: 360 }}>
           <input
             type="text"
-            placeholder="New category name"
+            placeholder="Nieuwe categorienaam"
             value={newName}
             onChange={e => { setNewName(e.target.value); setError(''); }}
             required
           />
           <button type="submit" disabled={submitting}>
-            {submitting ? 'Adding...' : 'Add Category'}
+            {submitting ? 'Toevoegen...' : 'Categorie toevoegen'}
           </button>
           {error && <span style={{ color: '#e63946', fontSize: '0.85rem' }}>{error}</span>}
         </form>
@@ -70,7 +70,7 @@ export default function SettingsPage() {
               </tr>
             ))}
             {categories.length === 0 && (
-              <tr><td colSpan={2} style={{ textAlign: 'center', color: '#888' }}>No categories yet</td></tr>
+              <tr><td colSpan={2} style={{ textAlign: 'center', color: '#888' }}>Nog geen categorieën</td></tr>
             )}
           </tbody>
         </table>
