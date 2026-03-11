@@ -34,9 +34,8 @@ services:
       - CHOKIDAR_USEPOLLING=1
     volumes:
       - ./server:/usr/src/app
-      - koetshuis_data:/data
+      - ./data:/data
     restart: unless-stopped
 
 volumes:
   koetshuis_web_modules:
-  koetshuis_data:
